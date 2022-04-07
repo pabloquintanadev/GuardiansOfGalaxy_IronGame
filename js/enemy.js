@@ -1,9 +1,9 @@
 class Enemy {
-    constructor(ctx, posX, posY, width, heigth) {
+    constructor(ctx, posX, posY, width, heigth, speed) {
         this.ctx = ctx
         this.enemyPos = { x: posX, y: posY }
         this.enemySize = { w: width, h: heigth }
-        this.enemyVel = { x: undefined, y: undefined }
+        this.enemyspeed = speed
 
         this.imageInstance = undefined
 
@@ -30,6 +30,6 @@ class Enemy {
     }
 
     moveDown() {
-        this.enemyPos.y += 5
+        this.enemyPos.y += 5 + this.enemyspeed
     }
 }

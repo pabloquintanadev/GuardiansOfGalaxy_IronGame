@@ -17,6 +17,8 @@ const ironApp = {
     enemyGenerateSpeed: undefined,
     onPlaying: false,
     musicOnPlay: false,
+    enemySpeed: undefined,
+    highScore: undefined,
 
 
 
@@ -85,6 +87,7 @@ const ironApp = {
     start() {
         this.onPlaying = true
         this.enemyGenerateSpeed = 15
+        this.enemySpeed = 0
 
         this.interval = setInterval(() => {
             this.clearAll()
@@ -119,6 +122,7 @@ const ironApp = {
         if (this.framesIndex % 300 === 0 && this.framesIndex !== 0) {
             this.nextLevel()
             this.enemyGenerateSpeed / 2
+            this.enemySpeed += .5
         }
 
         this.shootBonusArr.forEach(bonus => bonus.draw());
@@ -211,6 +215,15 @@ const ironApp = {
         }
     },
 
+    highscore() {
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '20px helvetica'
+        this.ctx.fillText("Your score", this.gameSize.w / 2 + 325, 40)
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '50px helvetica'
+        this.ctx.fillText(this.highScore, this.gameSize.w / 2 + 320, 100)
+    },
+
     createPlayer() {
         this.player = new Player(this.ctx, this.gameSize.w / 2 - 40, this.gameSize.h / 2 - 40, 80, 80)
         this.player.draw()
@@ -218,7 +231,7 @@ const ironApp = {
 
     generateEnemy() {
         if (this.framesIndex % this.enemyGenerateSpeed === 0) {
-            this.enemyArr.push(new Enemy(this.ctx, Math.random() * (this.gameSize.w - 550) + 250, 100, 80, 80))
+            this.enemyArr.push(new Enemy(this.ctx, Math.random() * (this.gameSize.w - 550) + 250, 100, 80, 80, this.enemySpeed))
         }
     },
 
@@ -252,6 +265,7 @@ const ironApp = {
 
     playerEnemyCollision() {
         this.gameOver()
+        this.highscore()
     },
 
     playerClearBonusCollision() {
@@ -284,6 +298,7 @@ const ironApp = {
         this.ctx.drawImage(this.imageInstanceGameOver, 0, 0, this.gameSize.w, this.gameSize.h)
         clearInterval(this.interval)
         this.onPlaying = false
+        this.highScore = this.framesIndex * 30
     },
 
     loadImages() {
