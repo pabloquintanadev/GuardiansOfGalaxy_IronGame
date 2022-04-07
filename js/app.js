@@ -11,6 +11,7 @@ const ironApp = {
     enemyArr: [],
     shootBonusArr: [],
     clearBonusArr: [],
+    slowBonusArr: [],
     bulletsArr: [],
     canShoot: false,
     nextLevelText: false,
@@ -95,7 +96,9 @@ const ironApp = {
             this.generateEnemy()
             this.generateShootBonus()
             this.generateClearBonus()
+            this.generateSlowBonus()
             this.displayCopyright()
+            console.log(this.enemySpeed)
             this.framesIndex++
         }, 30);
     },
@@ -127,6 +130,7 @@ const ironApp = {
 
         this.shootBonusArr.forEach(bonus => bonus.draw());
         this.clearBonusArr.forEach(bonus => bonus.draw())
+        this.slowBonusArr.forEach(bonus => bonus.draw())
         this.enemyArr.forEach(enemy => enemy.draw())
         this.bulletsArr.forEach(bullet => { bullet.draw() });
         this.clearEnemies()
@@ -159,6 +163,15 @@ const ironApp = {
                 this.player.playerPos.y < shootBonus.shootBonusPos.y + shootBonus.shootBonusSize.h &&
                 this.player.playerSize.h + this.player.playerPos.y > shootBonus.shootBonusPos.y) {
                 this.playerShootBonusCollision()
+            }
+        });
+
+        this.slowBonusArr.forEach(slowBonus => {
+            if (this.player.playerPos.x < slowBonus.slowBonusPos.x + slowBonus.slowBonusSize.w &&
+                this.player.playerPos.x + this.player.playerSize.w > slowBonus.slowBonusPos.x &&
+                this.player.playerPos.y < slowBonus.slowBonusPos.y + slowBonus.slowBonusSize.h &&
+                this.player.playerSize.h + this.player.playerPos.y > slowBonus.slowBonusPos.y) {
+                this.playerSlowBonusCollision()
 
             }
         })
@@ -255,6 +268,12 @@ const ironApp = {
         }
     },
 
+    generateSlowBonus() {
+        if (this.framesIndex % 301 === 0 && this.framesIndex !== 0) {
+            this.slowBonusArr.push(new SlowBonus(this.ctx, Math.random() * (this.gameSize.w - 550) + 250, Math.random() * (this.gameSize.h - 400) + 280))
+        }
+    },
+
     shoot() {
         if (this.canShoot) {
             let shootMusic = new Audio("./sounds/Bullet_sound.mov")
@@ -274,6 +293,14 @@ const ironApp = {
         let clearBonusMusic = new Audio("./sounds/groot_sound.mp3")
         clearBonusMusic.volume = 1
         clearBonusMusic.play()
+    },
+
+    playerSlowBonusCollision() {
+        this.enemySpeed = 0
+        this.slowBonusArr.splice(0, this.slowBonusArr.length)
+        let slowBonusMusic = new Audio("./sounds/groot_sound.mp3")
+        slowBonusMusic.volume = 1
+        slowBonusMusic.play()
     },
 
     playerShootBonusCollision() {
