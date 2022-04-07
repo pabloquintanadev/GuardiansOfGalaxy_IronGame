@@ -11,7 +11,7 @@ class SlowBonus {
 
     init() {
         this.imageInstance = new Image()
-        this.imageInstance.src = './img/star_lord.png'
+        this.imageInstance.src = './img/slow_bonus.png'
     }
 
     draw() {

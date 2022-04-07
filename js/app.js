@@ -269,7 +269,7 @@ const ironApp = {
     },
 
     generateSlowBonus() {
-        if (this.framesIndex % 301 === 0 && this.framesIndex !== 0) {
+        if (this.framesIndex % 1200 === 0 && this.framesIndex !== 0) {
             this.slowBonusArr.push(new SlowBonus(this.ctx, Math.random() * (this.gameSize.w - 550) + 250, Math.random() * (this.gameSize.h - 400) + 280))
         }
     },
