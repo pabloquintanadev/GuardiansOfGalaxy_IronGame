@@ -98,7 +98,6 @@ const ironApp = {
             this.generateClearBonus()
             this.generateSlowBonus()
             this.displayCopyright()
-            console.log(this.enemySpeed)
             this.framesIndex++
         }, 30);
     },
@@ -107,6 +106,7 @@ const ironApp = {
         this.enemyArr.splice(0, this.enemyArr.length)
         this.shootBonusArr.splice(0, this.shootBonusArr.length)
         this.clearBonusArr.splice(0, this.clearBonusArr.length)
+        this.slowBonusArr.splice(0, this.slowBonusArr.length)
         this.framesIndex = 0
 
         this.start()
@@ -201,9 +201,6 @@ const ironApp = {
     },
 
     pointsCounter(counter) {
-        // this.ctx.fillStyle = 'white'
-        // this.ctx.font = '20px helvetica'
-        // this.ctx.fillText("Your score", this.gameSize.w / 2 - 50, 45)
         this.ctx.fillStyle = 'white'
         this.ctx.font = '75px helvetica'
         this.ctx.fillText(counter * 30, this.gameSize.w / 2 - 120, 100)
