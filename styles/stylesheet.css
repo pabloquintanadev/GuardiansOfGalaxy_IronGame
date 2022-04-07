@@ -1,0 +1,13 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: black;
+
+}
+
+#myCanvas {
+    background-image: url("../img/superNewStart.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
